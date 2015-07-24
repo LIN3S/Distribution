@@ -1,0 +1,23 @@
+{
+    "name": "lin3s/lin3s-distribution",
+    "description": "Distribution library for different purposes inside LIN3S",
+    "keywords": ["lin3s", "distribution"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LIN3S",
+            "email": "info@lin3s.com",
+            "homepage": "https://lin3s.com"
+        }
+    ],
+    "require": {
+        "symfony/yaml": "~2.3",
+        "symfony/filesystem": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "LIN3S\\Distribution\\": "src/"
+        }
+    }
+}

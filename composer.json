@@ -12,7 +12,6 @@
         }
     ],
     "require": {
-        "symfony/yaml": "~2.3",
         "symfony/filesystem": "^2.7"
     },
     "autoload": {

@@ -19,12 +19,12 @@ use Composer\Script\CommandEvent;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-final class WordpressStandard
+final class Wordpress
 {
     /**
      * Static method that creates .htaccess, robots.txt and wp-config-custom.php files if they do not exist.
      */
-    public static function createRequiredFiles()
+    public static function installRequiredFiles()
     {
         $htaccess = __DIR__ . '/../../../../../.htaccess';
         $robots = __DIR__ . '/../../../../../robots.txt';

@@ -38,7 +38,7 @@ final class Wordpress
             if (false === $fileSystem->exists($robots)) {
                 $fileSystem->copy($robots . '.dist', $robots);
             }
-            if (false === $fileSystem->exists($wpConfig)) {
+            if (false === $fileSystem->exists($wpConfig . '.php')) {
                 $fileSystem->copy($wpConfig . '-sample.php', $wpConfig . '.php');
             }
         } catch (\Exception $exception) {

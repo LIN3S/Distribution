@@ -14,31 +14,29 @@ namespace LIN3S\Distribution\Composer;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Composer scripts to Wordpress Standard project.
+ * Composer scripts to Symfony Standard project.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-final class Wordpress
+final class Symfony
 {
     /**
-     * Static method that creates .htaccess, robots.txt and wp-config-custom.php files if they do not exist.
+     * Static method that creates .htaccess, files if they do not exist.
      */
     public static function installRequiredFiles()
     {
-        $htaccess = __DIR__ . '/../../../../../.htaccess';
-        $robots = __DIR__ . '/../../../../../robots.txt';
-        $wpConfig = __DIR__ . '/../../../../../wp-config-custom';
+        $htaccess = [
+            __DIR__ . '/../../../../../app/.htaccess',
+            __DIR__ . '/../../../../../src/.htaccess',
+            __DIR__ . '/../../../../../web/.htaccess'
+        ];
         $fileSystem = new Filesystem();
 
         try {
             if (false === $fileSystem->exists($htaccess)) {
-                $fileSystem->copy($htaccess . '.dist', $htaccess);
-            }
-            if (false === $fileSystem->exists($robots)) {
-                $fileSystem->copy($robots . '.dist', $robots);
-            }
-            if (false === $fileSystem->exists($wpConfig . '.php')) {
-                $fileSystem->copy($wpConfig . '-sample.php', $wpConfig . '.php');
+                $fileSystem->copy($htaccess[0] . '.dist', $htaccess[0]);
+                $fileSystem->copy($htaccess[1] . '.dist', $htaccess[1]);
+                $fileSystem->copy($htaccess[2] . '.dist', $htaccess[2]);
             }
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during process: \n%s\n", $exception->getMessage());

@@ -2,7 +2,7 @@
   "name": "lin3s-distribution",
   "author": "LIN3S",
   "main": "src/Javascript/index.js",
-  "devDependencies": {
+  "dependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.5",

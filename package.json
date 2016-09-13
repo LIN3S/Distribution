@@ -1,6 +1,9 @@
 {
   "name": "lin3s-distribution",
+  "description": "Distribution library for different purposes inside LIN3S",
+  "license": "MIT",
   "author": "LIN3S",
+  "version": "2.0.0",
   "main": "src/Javascript/index.js",
   "dependencies": {
     "babel": "^6.5.2",

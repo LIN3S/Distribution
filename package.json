@@ -26,6 +26,10 @@
     "webpack": "^2.1.0-beta.21",
     "webpack-svgstore-plugin": "3.0.0"
   },
+  "files": [
+    "src/Javascript",
+    "README.md"
+  ],
   "babel": {
     "presets": [
       "stage-2",

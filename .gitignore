@@ -7,5 +7,5 @@
 #
 # @author Beñat Espiña <benatespina@gmail.com>
 
-vendor
-composer.lock
+/vendor
+/composer.lock

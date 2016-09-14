@@ -11,8 +11,19 @@
 
 'use strict';
 
-import Webpack from './Webpack/Webpack';
+import {join} from 'path';
 
-export {
-  Webpack
+const include = join(__dirname, 'src/Javascript');
+
+export default {
+  entry: './src/Javascript/index',
+  output: {
+    path: join(__dirname, 'dist'),
+    filename: 'lin3s-distribution',
+  },
+  module: {
+    loaders: [
+      {test: /\.js$/, loader: 'babel', include}
+    ]
+  }
 }

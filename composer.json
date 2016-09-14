@@ -1,5 +1,5 @@
 {
-    "name": "lin3s/lin3s-distribution",
+    "name": "lin3s/distribution",
     "description": "Distribution library for different purposes inside LIN3S",
     "keywords": ["lin3s", "distribution"],
     "type": "library",

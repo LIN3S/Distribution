@@ -27,7 +27,7 @@
             "LIN3S\\Distribution\\": "src/"
         },
         "exclude-from-classmap": [
-            "src/Javascript/"
+            "/Javascript/"
         ]
     }
 }

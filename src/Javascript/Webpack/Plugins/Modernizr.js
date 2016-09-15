@@ -30,8 +30,8 @@ const
       "touchevents"
     ]
   },
-  Modernizr = (options = {}) => {
-    return new ModernizrWebpackPlugin(options === {} ? defaultOptions : options);
+  Modernizr = (options = defaultOptions) => {
+    return new ModernizrWebpackPlugin(options);
   };
 
 export default Modernizr;

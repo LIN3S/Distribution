@@ -20,12 +20,11 @@ const
       plugins: [
         {removeTitle: true},
         {removeUselessStrokeAndFill: true},
-        {removeViewBox: true},
-        {cleanupNumericValues: {floatPrecision: 1}}
+        {cleanupNumericValues: {floatPrecision: 2}}
       ]
     }
-  }, SvgStore = (options = {}) => {
-    return new WebpackSvgStore(options === {} ? defaultOptions : options);
+  }, SvgStore = (options = defaultOptions) => {
+    return new WebpackSvgStore(options);
   };
 
 export default SvgStore;

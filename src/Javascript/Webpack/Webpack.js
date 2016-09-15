@@ -19,53 +19,61 @@ import precss from 'precss';
 import Modernizr from './Plugins/Modernizr';
 import SvgStore from './Plugins/SvgStore';
 
-export default (options) => {
-  const
-    plugins = [
-      SvgStore(),
-      new ExtractTextPlugin(options.output.cssRoute)
-    ],
+const isProdEnvironment = (options) => {
+  return typeof options !== 'undefined' && options.env === 'prod';
+};
 
-    include = join(__dirname, options.input.base),
+const optionsOf = (plugin, options) => {
+  let defaultOptions;
+  if (typeof options.plugins !== 'undefined' && typeof options.plugins[plugin] !== 'undefined') {
+    defaultOptions = options.plugins[plugin];
+  }
 
-    loaders = [{
-      test: /\.js$/,
-      loader: 'babel',
-      include,
-      query: {
-        compact: false
-      }
-    }, {
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: /\.(s?css)$/,
-      loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: ['css-loader', 'postcss-loader', 'sass-loader']
-      })
-    }],
+  return defaultOptions;
+};
 
-    isProdEnvironment = (options) => {
-      return typeof options !== 'undefined' && options.env === 'prod';
-    };
+const getPlugins = (options) => {
+  const plugins = [
+    SvgStore(optionsOf('svgStore', options)),
+    new ExtractTextPlugin(options.output.cssRoute)
+  ];
+
+  if (isProdEnvironment(options)) {
+    plugins.push(UglifyJs(optionsOf('uglifyjs', options)));
+    plugins.push(Modernizr(optionsOf('modernizr', options)));
+  }
+
+  return plugins;
+};
+
+const getLoaders = (include, options) => {
+  const loaders = [{
+    test: /\.js$/,
+    loader: 'babel',
+    include,
+    query: {
+      compact: false
+    }
+  }, {
+    test: /\.json$/,
+    loader: 'json'
+  }, {
+    test: /\.(s?css)$/,
+    loader: ExtractTextPlugin.extract({
+      fallbackLoader: 'style-loader',
+      loader: ['css-loader', 'postcss-loader', 'sass-loader']
+    })
+  }];
 
   if (typeof options.module !== 'undefined' && typeof options.module.loaders !== 'undefined') {
     loaders.push(options.module.loaders);
   }
 
-  if (isProdEnvironment(options)) {
-    let uglifyjsPluginOptions = {}, modernizrPluginOptions = {};
-    if (typeof options.plugins !== 'undefined' && typeof options.plugins.uglifyjs !== 'undefined') {
-      uglifyjsPluginOptions = options.plugins.uglifyjs;
-    }
-    if (typeof options.plugins !== 'undefined' && typeof options.plugins.modernizr !== 'undefined') {
-      modernizrPluginOptions = options.plugins.modernizr;
-    }
+  return loaders;
+};
 
-    plugins.push(UglifyJs(uglifyjsPluginOptions));
-    plugins.push(Modernizr(modernizrPluginOptions));
-  }
+export default (options) => {
+  const include = join(__dirname, options.input.base);
 
   return {
     entry: options.entry,
@@ -74,7 +82,7 @@ export default (options) => {
       filename: options.output.jsFilename,
     },
     module: {
-      loaders: loaders,
+      loaders: getLoaders(include, options),
     },
     postcss: [
       autoprefixer(options.postcss.autoprefixer),
@@ -94,7 +102,7 @@ export default (options) => {
       ],
       alias: options.alias,
     },
-    plugins: plugins,
+    plugins: getPlugins(options),
     devtool: isProdEnvironment(options) ? false : 'source-map'
   };
 }

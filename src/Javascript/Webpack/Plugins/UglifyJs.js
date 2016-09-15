@@ -19,8 +19,8 @@ const
       warnings: false
     }
   },
-  UglifyJs = (options = {}) => {
-    return new UglifyJsPlugin(options === {} ? defaultOptions : options)
+  UglifyJs = (options = defaultOptions) => {
+    return new UglifyJsPlugin(options)
   };
 
 export default UglifyJs;

@@ -15,6 +15,7 @@ import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import {join} from 'path';
 import precss from 'precss';
+import Webpack from 'webpack';
 
 import Modernizr from './Plugins/Modernizr';
 import SvgStore from './Plugins/SvgStore';
@@ -35,7 +36,18 @@ const optionsOf = (plugin, options) => {
 const getPlugins = (options) => {
   const plugins = [
     SvgStore(optionsOf('svgStore', options)),
-    new ExtractTextPlugin(options.output.cssRoute)
+    new ExtractTextPlugin(options.output.cssRoute),
+    new Webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          autoprefixer(options.postcss.autoprefixer),
+          precss
+        ],
+        sassLoader: {
+          includePaths: [join(__dirname, options.input.scss)]
+        },
+      }
+    })
   ];
 
   if (isProdEnvironment(options)) {
@@ -83,13 +95,6 @@ export default (options) => {
     },
     module: {
       loaders: getLoaders(include, options),
-    },
-    postcss: [
-      autoprefixer(options.postcss.autoprefixer),
-      precss
-    ],
-    sassLoader: {
-      includePaths: [join(__dirname, options.input.scss)]
     },
     resolve: {
       modules: [

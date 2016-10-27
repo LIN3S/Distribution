@@ -11,7 +11,7 @@
 
 'use strict';
 
-import UglifyJsPlugin from 'webpack/optimize/UglifyJsPlugin';
+import webpack from 'webpack';
 
 const
   defaultOptions = {
@@ -20,7 +20,7 @@ const
     }
   },
   UglifyJs = (options = defaultOptions) => {
-    return new UglifyJsPlugin(options)
+    return new webpack.optimize.UglifyJsPlugin(options)
   };
 
 export default UglifyJs;

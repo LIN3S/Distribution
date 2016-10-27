@@ -19,6 +19,7 @@ import Webpack from 'webpack';
 
 import Modernizr from './Plugins/Modernizr';
 import SvgStore from './Plugins/SvgStore';
+import UglifyJs from './Plugins/UglifyJs';
 
 const isProdEnvironment = (options) => {
   return typeof options !== 'undefined' && options.env === 'prod';
@@ -84,30 +85,33 @@ const getLoaders = (include, options) => {
   return loaders;
 };
 
-export default (options) => {
-  const include = join(__dirname, options.input.base);
+export default (customOptions) => {
+  const include = join(__dirname, customOptions.input.base);
 
-  return {
-    entry: options.entry,
-    output: {
-      path: options.output.jsPath,
-      filename: options.output.jsFilename,
-    },
-    module: {
-      loaders: getLoaders(include, options),
-    },
-    resolve: {
-      modules: [
-        include,
-        'node_modules'
-      ],
-      extensions: [
-        '.js',
-        '.json'
-      ],
-      alias: options.alias,
-    },
-    plugins: getPlugins(options),
-    devtool: isProdEnvironment(options) ? false : 'source-map'
-  };
+  return (webpackOptions) => {
+    const options = Object.assign(webpackOptions, customOptions);
+    return {
+      entry: options.entry,
+      output: {
+        path: options.output.jsPath,
+        filename: options.output.jsFilename,
+      },
+      module: {
+        loaders: getLoaders(include, options),
+      },
+      resolve: {
+        modules: [
+          include,
+          'node_modules'
+        ],
+        extensions: [
+          '.js',
+          '.json'
+        ],
+        alias: options.alias,
+      },
+      plugins: getPlugins(options),
+      devtool: isProdEnvironment(options) ? false : 'source-map'
+    };
+  }
 }

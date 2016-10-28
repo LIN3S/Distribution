@@ -89,7 +89,10 @@ export default (customOptions) => {
   const include = join(__dirname, customOptions.input.base);
 
   return (webpackOptions) => {
-    const options = Object.assign(webpackOptions, customOptions);
+    const options = typeof webpackOptions === 'undefined'
+      ? customOptions
+      : Object.assign(webpackOptions, customOptions);
+
     return {
       entry: options.entry,
       output: {

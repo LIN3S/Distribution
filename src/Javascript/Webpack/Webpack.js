@@ -62,14 +62,14 @@ const getPlugins = (options) => {
 const getLoaders = (include, options) => {
   const loaders = [{
     test: /\.js$/,
-    loader: 'babel',
+    loader: 'babel-loader',
     include,
     query: {
       compact: false
     }
   }, {
     test: /\.json$/,
-    loader: 'json'
+    loader: 'json-loader'
   }, {
     test: /\.(s?css)$/,
     loader: ExtractTextPlugin.extract({

@@ -25,9 +25,9 @@ final class Wordpress
      */
     public static function installRequiredFiles()
     {
-        $htaccess = __DIR__ . '/../../../../../.htaccess';
-        $robots = __DIR__ . '/../../../../../robots.txt';
-        $wpConfig = __DIR__ . '/../../../../../wp-config-custom';
+        $htaccess = __DIR__ . '/../../../../../../.htaccess';
+        $robots = __DIR__ . '/../../../../../../robots.txt';
+        $wpConfig = __DIR__ . '/../../../../../../wp-config-custom';
         $fileSystem = new Filesystem();
 
         try {

@@ -26,9 +26,9 @@ final class Symfony
     public static function installRequiredFiles()
     {
         $htaccess = [
-            __DIR__ . '/../../../../../app/.htaccess',
-            __DIR__ . '/../../../../../src/.htaccess',
-            __DIR__ . '/../../../../../web/.htaccess',
+            __DIR__ . '/../../../../../../app/.htaccess',
+            __DIR__ . '/../../../../../../src/.htaccess',
+            __DIR__ . '/../../../../../../web/.htaccess',
         ];
         $fileSystem = new Filesystem();
 

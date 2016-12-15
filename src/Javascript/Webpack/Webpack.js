@@ -21,6 +21,12 @@ import Modernizr from './Plugins/Modernizr';
 import SvgStore from './Plugins/SvgStore';
 import UglifyJs from './Plugins/UglifyJs';
 
+const
+  rootPath = './../../../..',
+  esLintDefaultOptions = {
+    configFile: join(__dirname, `${rootPath}/.eslint.yml`)
+  };
+
 const isProdEnvironment = (options) => {
   return typeof options !== 'undefined' && options.env === 'prod';
 };
@@ -47,6 +53,7 @@ const getPlugins = (options) => {
         sassLoader: {
           includePaths: [join(__dirname, options.input.scss)]
         },
+        eslint: typeof options.eslint === 'undefined' ? esLintDefaultOptions : optionsOf('eslint', options)
       }
     })
   ];
@@ -59,17 +66,33 @@ const getPlugins = (options) => {
   return plugins;
 };
 
-const getLoaders = (include, options) => {
-  const loaders = [{
-    test: /\.js$/,
-    loader: 'babel-loader',
-    include,
-    query: {
+const getRules = (include, options) => {
+  const rules = [{
+    test: /\.jsx?$/,
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            "react",
+            "es2015",
+            "stage-2"
+          ]
+        }
+      }, {
+        loader: 'eslint-loader',
+        options: {
+          enforce: 'pre'
+        }
+      }
+    ],
+    include: include,
+    options: {
       compact: false
     }
   }, {
     test: /\.json$/,
-    loader: 'json-loader'
+    use: 'json-loader'
   }, {
     test: /\.(s?css)$/,
     loader: ExtractTextPlugin.extract({
@@ -78,15 +101,21 @@ const getLoaders = (include, options) => {
     })
   }];
 
-  if (typeof options.module !== 'undefined' && typeof options.module.loaders !== 'undefined') {
-    loaders.push(options.module.loaders);
+  if (typeof options.module !== 'undefined' && typeof options.module.rules !== 'undefined') {
+    if (options.module.rules instanceof Array) {
+      options.module.rules.forEach(function (rule) {
+        rules.push(rule);
+      })
+    } else {
+      rules.push(options.module.rules);
+    }
   }
 
-  return loaders;
+  return rules;
 };
 
 export default (customOptions) => {
-  const include = join(__dirname, customOptions.input.base);
+  const include = join(__dirname, `${rootPath}/${customOptions.input.base}`);
 
   return (webpackOptions) => {
     const options = typeof webpackOptions === 'undefined'
@@ -100,7 +129,7 @@ export default (customOptions) => {
         filename: options.output.jsFilename,
       },
       module: {
-        loaders: getLoaders(include, options),
+        rules: getRules(include, options),
       },
       resolve: {
         modules: [
@@ -109,7 +138,11 @@ export default (customOptions) => {
         ],
         extensions: [
           '.js',
-          '.json'
+          '.json',
+          '.jsx',
+          '.css',
+          '.scss',
+          '.svg'
         ],
         alias: options.alias,
       },

@@ -26,6 +26,36 @@ Otherwise, if your project is in JavaScript, be sure that Node is installed in y
 $ npm install lin3s-distribution --save-dev
 ```
 
+## Usage
+The following code is the basic configuration to make work with **Webpack**.
+```js
+'use strict';
+
+const Webpack = require('lin3s-distribution').Webpack;
+
+const options = {
+  entry: {
+    'app': './app/Resources/assets/js/entry-app.js',
+  },
+  input: {
+    base: 'app',
+    scss: `app/Resources/scss`
+  },
+  output: {
+    jsPath: './web/js',
+    jsFilename: '[name].js',
+    cssRoute: './../css/[name].css'
+  },
+  postcss: {
+    autoprefixer: {
+      browsers: ['last 2 versions']
+    }
+  }
+};
+
+module.exports = Webpack(options);
+```
+
 ## Licensing Options
 [![License](https://poser.pugx.org/lin3s/distribution/license.svg)](https://github.com/LIN3S/Distribution/blob/master/LICENSE)
 

@@ -3,7 +3,7 @@
   "description": "Distribution library for different purposes inside LIN3S",
   "license": "MIT",
   "author": "LIN3S",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -27,6 +27,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.13.0",
     "css-loader": "^0.25.0",
+    "eslint-loader": "^1.6.1",
     "eslint-plugin-react": "^6.7.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",

@@ -43,14 +43,20 @@ const options = {
   },
   output: {
     jsPath: './web/js',
+    jsPublicPath: '/',
     jsFilename: '[name].js',
-    cssRoute: './../css/[name].css'
+    jsFilenameProduction: '[name].[chunkhash].js',
+    cssPath: '../css',
+    cssPublicPath: '/',
+    cssFilename: '[name].css',
+    cssFilenameProduction: '[name].[contenthash].css'
   },
   postcss: {
     autoprefixer: {
       browsers: ['last 2 versions']
     }
-  }
+  },
+  manifest: '../../manifest.json'
 };
 
 module.exports = Webpack(options);

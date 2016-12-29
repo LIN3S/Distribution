@@ -13,6 +13,7 @@
 
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import ManifestPlugin from 'webpack-manifest-plugin';
 import {join} from 'path';
 import precss from 'precss';
 import Webpack from 'webpack';
@@ -40,10 +41,24 @@ const optionsOf = (plugin, options) => {
   return defaultOptions;
 };
 
+const cssFilename = (options) => {
+  const name = (isProdEnvironment(options) === true) && (typeof options.output.cssFilenameProduction !== 'undefined')
+    ? options.output.cssFilenameProduction
+    : options.output.cssFilename;
+
+  return `${options.output.cssPath}/${name}`;
+};
+
+const jsFilename = (options) => {
+  return (isProdEnvironment(options) === true) && (typeof options.output.jsFilenameProduction !== 'undefined')
+    ? options.output.jsFilenameProduction
+    : options.output.jsFilename;
+};
+
 const getPlugins = (options) => {
   const plugins = [
     SvgStore(optionsOf('svgStore', options)),
-    new ExtractTextPlugin(options.output.cssRoute),
+    new ExtractTextPlugin(cssFilename(options)),
     new Webpack.LoaderOptionsPlugin({
       options: {
         postcss: [
@@ -57,6 +72,10 @@ const getPlugins = (options) => {
       }
     })
   ];
+
+  if (typeof options.manifest !== 'undefined') {
+    plugins.push(new ManifestPlugin({fileName: options.manifest}));
+  }
 
   if (isProdEnvironment(options)) {
     plugins.push(UglifyJs(optionsOf('uglifyjs', options)));
@@ -96,6 +115,7 @@ const getRules = (include, options) => {
   }, {
     test: /\.(s?css)$/,
     loader: ExtractTextPlugin.extract({
+      publicPath: typeof options.output.cssPublicPath === 'undefined' ? '/' : options.output.cssPublicPath,
       fallbackLoader: 'style-loader',
       loader: ['css-loader', 'postcss-loader', 'sass-loader']
     })
@@ -126,7 +146,10 @@ export default (customOptions) => {
       entry: options.entry,
       output: {
         path: options.output.jsPath,
-        filename: options.output.jsFilename,
+        publicPath: typeof options.output.jsPublicPath === 'undefined'
+          ? options.output.jsPath
+          : options.output.jsPublicPath,
+        filename: jsFilename(options),
       },
       module: {
         rules: getRules(include, options),

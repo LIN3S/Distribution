@@ -62,6 +62,65 @@ const options = {
 module.exports = Webpack(options);
 ```
 
+## Enabled the hash generation in the Webpack resultant files
+The `composer.json`
+```json
+(...)
+
+"repositories": [
+    (...)
+
+    {
+        "type": "vcs",
+        "url": "https://github.com/LIN3S/twig-webpack-extension"
+    }
+],
+"require": {
+    (...)
+
+    "fullpipe/twig-webpack-extension": "dev-master",
+
+    (...)
+}
+(...)
+```
+```bash
+$ composer update
+```
+```yml
+# app/config/services.yml
+
+services:
+    (...)
+
+    twig_extension.webpack:
+        public: false
+        class: Fullpipe\TwigWebpackExtension\WebpackExtension
+        arguments:
+            - "%kernel.root_dir%/../manifest.json"
+        tags:
+            - { name: twig.extension }
+```
+Finally replace your script and link html tags with the following Twig tags.
+```twig
+{# app/Resources/views/base.html.twig #}
+
+(...)
+
+<head>
+(...)
+
+    {% webpack_entry_css 'app' %}
+</head>
+
+<body>
+(...)
+
+    {% webpack_entry_js 'app' %}
+</body>
+
+```
+
 ## Licensing Options
 [![License](https://poser.pugx.org/lin3s/distribution/license.svg)](https://github.com/LIN3S/Distribution/blob/master/LICENSE)
 

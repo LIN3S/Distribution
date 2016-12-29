@@ -3,7 +3,7 @@
   "description": "Distribution library for different purposes inside LIN3S",
   "license": "MIT",
   "author": "LIN3S",
-  "version": "2.1.3",
+  "version": "2.2.1",
   "main": "dist/index.js",
   "files": [
     "dist",

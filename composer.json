@@ -12,10 +12,14 @@
         }
     ],
     "require": {
+        "fullpipe/twig-webpack-extension": "^2.0.0",
         "symfony/filesystem": "^2.3 || ^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^1.12"
+    },
+    "suggest": {
+        "symfony/framework-bundle": "Allows to integrate the distribution with Symfony"
     },
     "scripts": {
         "cs": [

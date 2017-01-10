@@ -62,45 +62,31 @@ const options = {
 module.exports = Webpack(options);
 ```
 
-## Enabled the hash generation in the Webpack resultant files
-The `composer.json`
-```json
-(...)
+## Symfony integration
+Firstly, you need to install the bundle in your app kernel.
+```php
+// app/config/AppKernel.php
 
-"repositories": [
-    (...)
+public function registerBundles()
+{
+    $bundles = [
+        // ...
 
-    {
-        "type": "vcs",
-        "url": "https://github.com/LIN3S/twig-webpack-extension"
-    }
-],
-"require": {
-    (...)
-
-    "fullpipe/twig-webpack-extension": "dev-master",
-
-    (...)
+        new LIN3S\Distribution\Php\Symfony\Lin3sDistributionBundle(),
+        // ...
+    ];
 }
-(...)
 ```
-```bash
-$ composer update
-```
+
+Once the bundle has been installed enable it in the AppKernel:
 ```yml
-# app/config/services.yml
+# app/config/config.yml
 
-services:
-    (...)
-
-    twig_extension.webpack:
-        public: false
-        class: Fullpipe\TwigWebpackExtension\WebpackExtension
-        arguments:
-            - "%kernel.root_dir%/../manifest.json"
-        tags:
-            - { name: twig.extension }
+lin3s_distribution:
+    webpack:
+        manifest_path: "%kernel.root_dir%/../manifest.json"
 ```
+
 Finally replace your script and link html tags with the following Twig tags.
 ```twig
 {# app/Resources/views/base.html.twig #}

@@ -11,7 +11,7 @@
 
 namespace LIN3S\Distribution\Php\Symfony;
 
-use LIN3S\Distribution\Php\Symfony\DependencyInjection\TwigExtensionsPass;
+use LIN3S\Distribution\Php\Symfony\DependencyInjection\Compiler\TwigExtensionsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

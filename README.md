@@ -91,6 +91,15 @@ lin3s_distribution:
         manifest_path: "%kernel.root_dir%/../manifest.json"
 ```
 
+> Optionally you can enabled the webpack default configuration doing this:
+
+```yml
+# app/config/config.yml
+
+lin3s_distribution:
+    webpack: ~
+```
+
 Finally replace your script and link html tags with the following Twig tags.
 ```twig
 {# app/Resources/views/base.html.twig #}

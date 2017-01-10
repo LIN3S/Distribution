@@ -24,6 +24,10 @@ $ composer require lin3s/distribution
 Otherwise, if your project is in JavaScript, be sure that Node is installed in your system and execute the following command:
 ```shell
 $ npm install lin3s-distribution --save-dev
+#
+# OR
+#
+$ yarn add lin3s-distribution --dev
 ```
 
 ## Usage

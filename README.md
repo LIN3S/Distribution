@@ -78,7 +78,7 @@ public function registerBundles()
 }
 ```
 
-Once the bundle has been installed enable it in the AppKernel:
+Once the bundle has been enabled you can manage the configuration. The following is the default config:
 ```yml
 # app/config/config.yml
 

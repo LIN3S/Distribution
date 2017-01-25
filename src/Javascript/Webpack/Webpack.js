@@ -88,6 +88,7 @@ const getPlugins = (options) => {
 const getRules = (include, options) => {
   const rules = [{
     test: /\.jsx?$/,
+    include: include,
     use: [
       {
         loader: 'babel-loader',
@@ -96,7 +97,8 @@ const getRules = (include, options) => {
             "react",
             "es2015",
             "stage-2"
-          ]
+          ],
+          compact: false
         }
       }, {
         loader: 'eslint-loader',
@@ -104,11 +106,7 @@ const getRules = (include, options) => {
           enforce: 'pre'
         }
       }
-    ],
-    include: include,
-    options: {
-      compact: false
-    }
+    ]
   }, {
     test: /\.json$/,
     use: 'json-loader'

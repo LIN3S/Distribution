@@ -89,6 +89,7 @@ const getRules = (include, options) => {
   const rules = [{
     test: /\.jsx?$/,
     include: include,
+    exclude: /(node_modules|bower_components)/,
     use: [
       {
         loader: 'babel-loader',

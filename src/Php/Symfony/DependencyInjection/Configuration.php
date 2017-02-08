@@ -34,6 +34,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('manifest_path')
                             ->defaultValue("%kernel.root_dir%/../manifest.json")
                         ->end()
+                        ->scalarNode('public_js_path')
+                            ->defaultValue("/js/")
+                        ->end()
+                        ->scalarNode('public_css_path')
+                            ->defaultValue("/css/")
+                        ->end()
                     ->end()
                 ->end()
             ->end();

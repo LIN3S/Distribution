@@ -6,6 +6,8 @@
 
         <service id="twig_extension.webpack" class="Fullpipe\TwigWebpackExtension\WebpackExtension" public="false">
             <argument>""</argument>
+            <argument>""</argument>
+            <argument>""</argument>
             <tag name="twig.extension"/>
         </service>
 

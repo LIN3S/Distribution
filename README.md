@@ -46,11 +46,12 @@ const options = {
     scss: `app/Resources/scss`
   },
   output: {
-    jsPath: './web/js',
+    jsPath: './web',
     jsPublicPath: '/',
     jsFilename: '[name].js',
     jsFilenameProduction: '[name].[chunkhash].js',
-    cssPath: '../css',
+
+    cssPath: '',
     cssPublicPath: '/',
     cssFilename: '[name].css',
     cssFilenameProduction: '[name].[contenthash].css'
@@ -89,6 +90,8 @@ Once the bundle has been enabled you can manage the configuration. The following
 lin3s_distribution:
     webpack:
         manifest_path: "%kernel.root_dir%/../manifest.json"
+        public_js_path: "/js/"
+        public_css_path: "/css/"
 ```
 
 > Optionally you can enabled the webpack default configuration doing this:

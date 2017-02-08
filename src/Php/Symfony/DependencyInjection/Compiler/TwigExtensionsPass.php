@@ -24,5 +24,7 @@ class TwigExtensionsPass implements CompilerPassInterface
 
         $config = $container->getParameter('lin3s_distribution.config');
         $container->getDefinition('twig_extension.webpack')->replaceArgument(0, $config['webpack']['manifest_path']);
+        $container->getDefinition('twig_extension.webpack')->replaceArgument(1, $config['webpack']['public_js_path']);
+        $container->getDefinition('twig_extension.webpack')->replaceArgument(2, $config['webpack']['public_css_path']);
     }
 }

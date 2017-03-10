@@ -11,13 +11,13 @@ Downloads from NPM (JS):<br>
 
 
 ## Why?
-In [LIN3S][1], we are working with many libraries and projects and usually all of them they need scripts to
-automatized some process. This library centralize this kind of scripts and tasks improving its reusability.
+In [LIN3S][1], we are working with many libraries and projects and usually all of them need scripts to
+automate some process. This library centralize this kind of scripts and tasks improving its reusability.
 
 ## Installation
 At this moment, this package contains *PHP* and *JavaScript* code, so you can manage this library from [NPM][3] and from [Composer][2].
 
-If your project is in PHP, be sure that the Composer is installed in your system and execute the following command:
+If your project is in PHP, be sure that Composer is installed in your system and execute the following command:
 ```shell
 $ composer require lin3s/distribution
 ```
@@ -31,7 +31,7 @@ $ yarn add lin3s-distribution --dev
 ```
 
 ## Usage
-The following code is the basic configuration to make work with **Webpack**.
+The following code is the basic configuration to make it work with **Webpack**.
 ```js
 'use strict';
 
@@ -94,7 +94,7 @@ lin3s_distribution:
         public_css_path: "/css/"
 ```
 
-> Optionally you can enabled the webpack default configuration doing this:
+> Optionally you can enable the webpack default configuration doing this:
 
 ```yml
 # app/config/config.yml

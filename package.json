@@ -46,7 +46,7 @@
     "style-loader": "^0.13.1",
     "uglify-js": "^2.7.4",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.0",
+    "webpack": "2.2.*",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-svgstore-plugin": "^3.0.5"
   },

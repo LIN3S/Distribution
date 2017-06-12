@@ -120,11 +120,6 @@ const getRules = (include, options) => {
     test: /\.json$/,
     use: 'json-loader'
   }, {
-    test: /\.scss$/,
-    include: include,
-    exclude: /(node_modules|bower_components)/,
-    use: 'scsslint-loader'
-  }, {
     test: /\.(s?css)$/,
     use: ExtractTextPlugin.extract({
       publicPath: typeof options.output.cssPublicPath === 'undefined' ? '/' : options.output.cssPublicPath,

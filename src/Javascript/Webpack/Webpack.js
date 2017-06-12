@@ -14,18 +14,26 @@
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
+import StyleLintPlugin from 'stylelint-webpack-plugin';
 import {join} from 'path';
 import precss from 'precss';
 import Webpack from 'webpack';
 
 import Modernizr from './Plugins/Modernizr';
-import SvgStore from './Plugins/SvgStore';
 import UglifyJs from './Plugins/UglifyJs';
+
+// Hide DeprecationWarning: loaderUtils.parseQuery()
+// received a non-string value which can be problematic
+process.noDeprecation = true;
 
 const
   rootPath = './../../../..',
   esLintDefaultOptions = {
-    configFile: join(__dirname, `${rootPath}/.eslint.yml`)
+    configFile: join(__dirname, `${rootPath}/.eslintrc.js`)
+  },
+  styleLintDefaultOptions = {
+    configFile: join(__dirname, `${rootPath}/.stylelintrc.js`),
+    sintax: 'scss'
   };
 
 const isProdEnvironment = (options) => {
@@ -57,7 +65,7 @@ const jsFilename = (options) => {
 
 const getPlugins = (options) => {
   const plugins = [
-    SvgStore(optionsOf('svgStore', options)),
+    new StyleLintPlugin(styleLintDefaultOptions),
     new ExtractTextPlugin(cssFilename(options)),
     new Webpack.LoaderOptionsPlugin({
       options: {
@@ -112,11 +120,16 @@ const getRules = (include, options) => {
     test: /\.json$/,
     use: 'json-loader'
   }, {
+    test: /\.scss$/,
+    include: include,
+    exclude: /(node_modules|bower_components)/,
+    use: 'scsslint-loader'
+  }, {
     test: /\.(s?css)$/,
-    loader: ExtractTextPlugin.extract({
+    use: ExtractTextPlugin.extract({
       publicPath: typeof options.output.cssPublicPath === 'undefined' ? '/' : options.output.cssPublicPath,
-      fallbackLoader: 'style-loader',
-      loader: ['css-loader', 'postcss-loader', 'sass-loader']
+      fallback: 'style-loader',
+      use: ['css-loader', 'postcss-loader', 'sass-loader']
     })
   }];
 
@@ -144,7 +157,7 @@ export default (customOptions) => {
     return {
       entry: options.entry,
       output: {
-        path: options.output.jsPath,
+        path: join(__dirname, options.output.jsPath),
         publicPath: typeof options.output.jsPublicPath === 'undefined'
           ? options.output.jsPath
           : options.output.jsPublicPath,

@@ -9,14 +9,11 @@
  * @author Beñat Espiña <bespina@lin3s.com>
  */
 
-'use strict';
-
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import {join} from 'path';
-import precss from 'precss';
 import Webpack from 'webpack';
 
 import Modernizr from './Plugins/Modernizr';
@@ -69,10 +66,6 @@ const getPlugins = (options) => {
     new ExtractTextPlugin(cssFilename(options)),
     new Webpack.LoaderOptionsPlugin({
       options: {
-        postcss: [
-          autoprefixer(options.postcss.autoprefixer),
-          precss
-        ],
         sassLoader: {
           includePaths: [join(__dirname, options.input.scss)]
         },
@@ -124,7 +117,18 @@ const getRules = (include, options) => {
     use: ExtractTextPlugin.extract({
       publicPath: typeof options.output.cssPublicPath === 'undefined' ? '/' : options.output.cssPublicPath,
       fallback: 'style-loader',
-      use: ['css-loader', 'postcss-loader', 'sass-loader']
+      use: [{
+        loader: 'css-loader',
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => [
+            autoprefixer(options.postcss.autoprefixer)
+          ]
+        }
+      }, {
+        loader: 'sass-loader'
+      }]
     })
   }];
 

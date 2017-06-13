@@ -9,8 +9,6 @@
  * @author Beñat Espiña <bespina@lin3s.com>
  */
 
-'use strict';
-
 import WebpackSvgStore from 'webpack-svgstore-plugin';
 
 const

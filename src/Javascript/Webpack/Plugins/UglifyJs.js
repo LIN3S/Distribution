@@ -9,8 +9,6 @@
  * @author Beñat Espiña <bespina@lin3s.com>
  */
 
-'use strict';
-
 import webpack from 'webpack';
 
 const

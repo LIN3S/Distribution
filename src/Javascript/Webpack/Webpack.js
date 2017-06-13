@@ -156,7 +156,7 @@ export default (customOptions) => {
     return {
       entry: options.entry,
       output: {
-        path: join(__dirname, options.output.jsPath),
+        path: join(__dirname, `${rootPath}/${options.output.jsPath}`),
         publicPath: typeof options.output.jsPublicPath === 'undefined'
           ? options.output.jsPath
           : options.output.jsPublicPath,

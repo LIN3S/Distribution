@@ -3,7 +3,7 @@
   "description": "Distribution library for different purposes inside LIN3S",
   "license": "MIT",
   "author": "LIN3S",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -48,14 +48,14 @@
     "stylelint-scss": "^1.4.3",
     "stylelint-selector-bem-pattern": "^1.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
-    "uglify-js": "^3.0.15",
-    "url-loader": "^0.5.8",
-    "webpack": "^2.6.1",
-    "webpack-manifest-plugin": "^1.1.0",
-    "webpack-svgstore-plugin": "^3.0.5"
+    "uglify-js": "^3.0.24",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.1.0",
+    "webpack-manifest-plugin": "^1.1.2",
+    "webpack-svgstore-plugin": "^4.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "rimraf": "^2.5.4"
+    "babel-cli": "^6.24.1",
+    "rimraf": "^2.6.1"
   }
 }

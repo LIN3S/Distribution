@@ -17,7 +17,6 @@ import {join} from 'path';
 import Webpack from 'webpack';
 
 import Modernizr from './Plugins/Modernizr';
-import UglifyJs from './Plugins/UglifyJs';
 
 // Hide DeprecationWarning: loaderUtils.parseQuery()
 // received a non-string value which can be problematic
@@ -79,7 +78,6 @@ const getPlugins = (options) => {
   }
 
   if (isProdEnvironment(options)) {
-    plugins.push(UglifyJs(optionsOf('uglifyjs', options)));
     plugins.push(Modernizr(optionsOf('modernizr', options)));
   }
 

@@ -5,6 +5,9 @@ This changelog references the relevant changes done between versions.
 To get the diff for a specific change, go to https://github.com/LIN3S/Distribution/commit/XXX where XXX is the change hash 
 To get the diff between two versions, go to https://github.com/LIN3S/Distribution/compare/v3.0.0...v4.0.0
 
+* 4.1.0
+    * Refactored Webpack base configuration to allow project-level plugin injection.
+    * Added BundleAnalyzerPlugin to the webpack config tree.
 * 4.0.1
     * Removed UglifyJs plugin which is automatically included with "-p" option in the Webpack execution.
 * 4.0.0

@@ -3,7 +3,7 @@
   "description": "Distribution library for different purposes inside LIN3S",
   "license": "MIT",
   "author": "LIN3S",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -51,6 +51,7 @@
     "uglify-js": "^3.0.24",
     "url-loader": "^0.5.9",
     "webpack": "^3.1.0",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-manifest-plugin": "^1.1.2",
     "webpack-svgstore-plugin": "^4.0.1"
   },

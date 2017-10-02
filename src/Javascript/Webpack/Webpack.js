@@ -7,12 +7,14 @@
  * file that was distributed with this source code.
  *
  * @author Beñat Espiña <bespina@lin3s.com>
+ * @author Mikel Tuesta <mikel@lin3s.com>
  */
 
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import {join} from 'path';
 import Webpack from 'webpack';
 
@@ -59,7 +61,7 @@ const jsFilename = (options) => {
     : options.output.jsFilename;
 };
 
-const getPlugins = (options) => {
+const getPlugins = (options, customPlugins) => {
   const plugins = [
     new StyleLintPlugin(styleLintDefaultOptions),
     new ExtractTextPlugin(cssFilename(options)),
@@ -70,11 +72,16 @@ const getPlugins = (options) => {
         },
         eslint: typeof options.eslint === 'undefined' ? esLintDefaultOptions : optionsOf('eslint', options)
       }
-    })
+    }),
+    ...customPlugins
   ];
 
   if (typeof options.manifest !== 'undefined') {
     plugins.push(new ManifestPlugin({fileName: options.manifest}));
+  }
+
+  if (typeof options.analyze !== 'undefined' && !isProdEnvironment(options)) {
+    plugins.push(new BundleAnalyzerPlugin());
   }
 
   if (isProdEnvironment(options)) {
@@ -143,7 +150,7 @@ const getRules = (include, options) => {
   return rules;
 };
 
-export default (customOptions) => {
+export default (customOptions, customPlugins = []) => {
   const include = join(__dirname, `${rootPath}/${customOptions.input.base}`);
 
   return (webpackOptions) => {
@@ -178,7 +185,7 @@ export default (customOptions) => {
         ],
         alias: options.alias,
       },
-      plugins: getPlugins(options),
+      plugins: getPlugins(options, customPlugins),
       devtool: isProdEnvironment(options) ? false : 'source-map'
     };
   }

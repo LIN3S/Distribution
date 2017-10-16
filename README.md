@@ -43,7 +43,10 @@ const options = {
   },
   input: {
     base: 'app',
-    scss: `app/Resources/scss`
+    scss: 'app/Resources/scss',
+    includedNodeModules: [
+      'swiper'
+    ]
   },
   output: {
     jsPath: './web',

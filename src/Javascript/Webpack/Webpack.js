@@ -27,11 +27,11 @@ process.noDeprecation = true;
 const
   rootPath = './../../../..',
   esLintDefaultOptions = {
-    configFile: join(__dirname, `${rootPath}/.eslintrc.js`)
+    configFile: join(__dirname, `${rootPath}/.eslintrc.js`),
   },
   styleLintDefaultOptions = {
     configFile: join(__dirname, `${rootPath}/.stylelintrc.js`),
-    sintax: 'scss'
+    sintax: 'scss',
   };
 
 const isProdEnvironment = (options) => {
@@ -68,10 +68,10 @@ const getPlugins = (options, customPlugins) => {
     new Webpack.LoaderOptionsPlugin({
       options: {
         sassLoader: {
-          includePaths: [join(__dirname, options.input.scss)]
+          includePaths: [join(__dirname, options.input.scss)],
         },
-        eslint: typeof options.eslint === 'undefined' ? esLintDefaultOptions : optionsOf('eslint', options)
-      }
+        eslint: typeof options.eslint === 'undefined' ? esLintDefaultOptions : optionsOf('eslint', options),
+      },
     }),
     ...customPlugins
   ];
@@ -91,32 +91,40 @@ const getPlugins = (options, customPlugins) => {
   return plugins;
 };
 
+const nodeModulesInclusion = (options) => {
+  if (typeof options.input.includedNodeModules === 'undefined') {
+    return [];
+  }
+
+  return options.input.includedNodeModules;
+};
+
 const getRules = (include, options) => {
   const rules = [{
     test: /\.jsx?$/,
     include: include,
-    exclude: /(node_modules|bower_components)/,
+    exclude: excludeNodeModulesExcept(nodeModulesInclusion(options)),
     use: [
       {
         loader: 'babel-loader',
         options: {
           presets: [
-            "react",
-            "es2015",
-            "stage-2"
+            'react',
+            'es2015',
+            'stage-2',
           ],
-          compact: false
-        }
+          compact: false,
+        },
       }, {
         loader: 'eslint-loader',
         options: {
-          enforce: 'pre'
-        }
-      }
-    ]
+          enforce: 'pre',
+        },
+      },
+    ],
   }, {
     test: /\.json$/,
-    use: 'json-loader'
+    use: 'json-loader',
   }, {
     test: /\.(s?css)$/,
     use: ExtractTextPlugin.extract({
@@ -128,13 +136,13 @@ const getRules = (include, options) => {
         loader: 'postcss-loader',
         options: {
           plugins: () => [
-            autoprefixer(options.postcss.autoprefixer)
-          ]
-        }
+            autoprefixer(options.postcss.autoprefixer),
+          ],
+        },
       }, {
-        loader: 'sass-loader'
-      }]
-    })
+        loader: 'sass-loader',
+      }],
+    }),
   }];
 
   if (typeof options.module !== 'undefined' && typeof options.module.rules !== 'undefined') {
@@ -148,6 +156,29 @@ const getRules = (include, options) => {
   }
 
   return rules;
+};
+
+/**
+ * Method copied from: https://github.com/webpack/webpack/issues/2031#issuecomment-317589620
+ */
+const excludeNodeModulesExcept = (modules) => {
+  const moduleRegExps = modules.map((modName) => (
+    new RegExp(`node_modules/${modName}`)
+  ));
+
+  return (modulePath) => {
+    if (/node_modules/.test(modulePath)) {
+      for (let i = 0; i < moduleRegExps.length; i++) {
+        if (moduleRegExps[i].test(modulePath)) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
+  };
 };
 
 export default (customOptions, customPlugins = []) => {
@@ -173,7 +204,7 @@ export default (customOptions, customPlugins = []) => {
       resolve: {
         modules: [
           include,
-          'node_modules'
+          'node_modules',
         ],
         extensions: [
           '.js',
@@ -181,12 +212,12 @@ export default (customOptions, customPlugins = []) => {
           '.jsx',
           '.css',
           '.scss',
-          '.svg'
+          '.svg',
         ],
         alias: options.alias,
       },
       plugins: getPlugins(options, customPlugins),
-      devtool: isProdEnvironment(options) ? false : 'source-map'
+      devtool: isProdEnvironment(options) ? false : 'source-map',
     };
   }
 }

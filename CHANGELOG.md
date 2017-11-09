@@ -5,6 +5,8 @@ This changelog references the relevant changes done between versions.
 To get the diff for a specific change, go to https://github.com/LIN3S/Distribution/commit/XXX where XXX is the change hash 
 To get the diff between two versions, go to https://github.com/LIN3S/Distribution/compare/v4.1.0...v4.2.0
 
+* 4.2.1
+    * Increased the sass loader precision option to avoid browser bugs with CSS rules' decimals.
 * 4.2.0
     * `includedNodeModules` inside the `input` config object to avoid the global `node_modules` exclusion from Webpack.
 * 4.1.0

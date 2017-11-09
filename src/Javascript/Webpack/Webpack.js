@@ -141,8 +141,11 @@ const getRules = (include, options) => {
         },
       }, {
         loader: 'sass-loader',
-      }],
-    }),
+        options: {
+          precision: 6
+        }
+      }]
+    })
   }];
 
   if (typeof options.module !== 'undefined' && typeof options.module.rules !== 'undefined') {

@@ -3,7 +3,7 @@
   "description": "Distribution library for different purposes inside LIN3S",
   "license": "MIT",
   "author": "LIN3S",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -49,6 +49,7 @@
     "stylelint-selector-bem-pattern": "^1.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
     "uglify-js": "^3.0.24",
+    "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.9",
     "webpack": "^3.1.0",
     "webpack-bundle-analyzer": "^2.9.0",

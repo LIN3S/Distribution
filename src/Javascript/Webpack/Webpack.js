@@ -14,6 +14,7 @@ import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import {join} from 'path';
 import Webpack from 'webpack';
@@ -86,6 +87,12 @@ const getPlugins = (options, customPlugins) => {
 
   if (isProdEnvironment(options)) {
     plugins.push(Modernizr(optionsOf('modernizr', options)));
+    plugins.push(new UglifyJsPlugin({
+      test: /\.jsx?$/,
+      cache: true,
+      parallel: true,
+      sourceMap: true
+    }));
   }
 
   return plugins;
